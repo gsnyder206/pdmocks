@@ -3,10 +3,12 @@ import glob
 import numpy as np
 import sys
 import shutil
+import astropy.io.ascii as ascii
+import yt
 
 foggie_repo_dir='/nobackupp17/gfsnyder/foggie'
 
-def get_halo_center(snapname,runname,halo_number):
+def get_halo_center(snapname,runname,halo_number,ds):
 
     if runname=='natural':
         run_use='orig_nref11n'
@@ -15,8 +17,12 @@ def get_halo_center(snapname,runname,halo_number):
 
     cv_file = os.path.join(foggie_repo_dir,'foggie','halo_infos',halo_number,run_use,'halo_c_v')
     print('cv_file: ', cv_file)
+    if not os.path.lexists(cv_file):
+        print('cv file not found, skipping!')
+        return None,None,None
 
-
+    cv_data=ascii.read(cv_file)
+    print(cv_data[0:5])
 
     return x, y, z
 
@@ -35,7 +41,8 @@ def setup_pd_snapshot(input_snapdir,
     haloname = os.path.basename(os.path.dirname(os.path.dirname(input_snapdir)))
 
     print(snapname, runname, haloname)
-
+    snapfile = os.path.join(input_snapdir,snapname)
+    ds=yt.load(snapfile)
 
     output_dir=os.path.join(output_root,haloname,runname,snapname)
     os.makedirs(output_dir, exist_ok=True)
@@ -48,7 +55,7 @@ def setup_pd_snapshot(input_snapdir,
     #compute center from foggie halo_c_v files
     halo_number = haloname.split('_')[-1]
 
-    x,y,z=get_halo_center(snapname,runname,halo_number)
+    x,y,z=get_halo_center(snapname,runname,halo_number,ds)
 
     #edit parameter files
     modelfile=os.path.join(output_dir,'parameters_'+snapname+'.py')
