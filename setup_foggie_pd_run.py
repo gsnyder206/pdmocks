@@ -27,6 +27,12 @@ def setup_pd_snapshot(input_snapdir,
     print('output dir: ', output_dir)
     shutil.copy2(pd_master_template,output_dir)
 
+
+    #compute center from foggie halo_c_v files
+    halo_number = haloname.split('_')[-1]
+
+
+
     #edit parameter files
     modelfile=os.path.join(output_dir,'parameters_'+snapname+'.py')
     mfo=open(modelfile,'w')
@@ -41,9 +47,10 @@ def setup_pd_snapshot(input_snapdir,
     mfo.write("inputfile = PD_output_dir+'/snap."+snapname+".rtin'\n")
     mfo.write("outputfile = PD_output_dir+'/snap."+snapname+".rtout'\n")
 
-    mfo.write('x_cent = 0\n')
-    mfo.write('y_cent = 0\n')
-    mfo.write('z_cent = 0\n')
+    #HAVE TO CODE THIS -- See Anna's code!
+    mfo.write('x_cent = 36120.37227828722\n')
+    mfo.write('y_cent = 35397.028823492736\n')
+    mfo.write('z_cent = 37026.72022802777\n')
 
     mfo.write('TCMB = 2.73\n')
 
