@@ -30,7 +30,7 @@ def get_halo_center(snapname,runname,halo_number,ds):
     zc=cv_data['col6'][halo_i]
     halo_center_kpc = ds.arr([float(xc), \
                             float(yc), \
-                            float(zc), 'kpc')
+                            float(zc)], 'kpc')
     halo_center_code = halo_center_kpc.in_units('code_length')
 
     return halo_center_code
