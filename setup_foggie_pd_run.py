@@ -80,9 +80,9 @@ def setup_pd_snapshot(input_snapdir,
     mfo.write("inputfile = PD_output_dir+'/snap."+snapname+".rtin'\n")
     mfo.write("outputfile = PD_output_dir+'/snap."+snapname+".rtout'\n")
 
-    mfo.write('x_cent = '+str(x)+'\n')
-    mfo.write('y_cent = '+str(y)+'\n')
-    mfo.write('z_cent = '+str(z)+'\n')
+    mfo.write('x_cent = '+str(x.value)+'\n')
+    mfo.write('y_cent = '+str(y.value)+'\n')
+    mfo.write('z_cent = '+str(z.value)+'\n')
 
     mfo.write('TCMB = 2.73\n')
 
