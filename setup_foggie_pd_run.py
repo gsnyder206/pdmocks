@@ -8,7 +8,7 @@ foggie_repo_dir='/nobackupp17/gfsnyder/foggie'
 
 def get_halo_center(snapname,runname,halo_number):
 
-    if runname='natural':
+    if runname=='natural':
         run_use='orig_nref11n':
     else:
         run_use=runname
