@@ -38,7 +38,7 @@ seed = -12345 # has to be an int, and negative.
 #DUST INFORMATION
 #===============================================
 #dustdir = '/home/desika.narayanan/hyperion-dust-0.1.0/dust_files/' #location of your dust files
-dustdir = '/home5/gfsnyder/hyperion-dust-0.1.0/dust_files/'
+dustdir = '/home5/gfsnyder/code/hyperion-dust-0.1.0/dust_files/'
 dustfile = 'd03_3.1_6.0_A.hdf5'
 PAH = True
 
