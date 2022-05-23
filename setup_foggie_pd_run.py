@@ -31,7 +31,7 @@ def setup_pd_snapshot(input_snapdir,
     modelfile=os.path.join(output_dir,'parameters_'+snapname+'.py')
     mfo=open(modelfile,'w')
 
-    mfo.write("hydro_dir = '"+input_snapdir+"'\n")
+    mfo.write("hydro_dir = '"+input_snapdir+"/'\n")
     mfo.write("snapshot_name = '"+snapname+"'\n")
 
     mfo.write("PD_output_dir = '"+output_dir+"'\n")
