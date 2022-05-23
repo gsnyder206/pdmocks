@@ -31,10 +31,10 @@ def setup_pd_snapshot(input_snapdir,
     modelfile=os.path.join(output_dir,'parameters_'+snapname+'.py')
     mfo=open(modelfile,'w')
 
-    mfo.write('hydro_dir = '+input_snapdir+'\n')
-    mfo.write('snapshot_name = '+snapname+'\n')
+    mfo.write("hydro_dir = '"+input_snapdir+"'\n")
+    mfo.write("snapshot_name = '"+snapname+"'\n")
 
-    mfo.write('PD_output_dir = '+output_dir+'\n')
+    mfo.write("PD_output_dir = '"+output_dir+"'\n")
     mfo.write("Auto_TF_file = 'snap."+snapname+".logical'\n")
     mfo.write("Auto_dustdens_file = 'snap."+snapname+".dustdens'\n")
 
