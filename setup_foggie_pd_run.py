@@ -2,9 +2,10 @@ import os
 import glob
 import numpy as np
 import sys
+import shutil
 
 def setup_pd_snapshot(input_snap,
-                    output_dir='/nobackup17/gfsnyder/foggie-pd-outputs/',
+                    output_root='/nobackup17/gfsnyder/foggie-pd-outputs/',
                     pd_master_template='/home/gfsnyder/PythonCode/pdmocks/parameters_master.py',
                     pd_model_template='/home/gfsnyder/PythonCode/pdmocks/parameters_model.py'):
 
@@ -17,11 +18,16 @@ def setup_pd_snapshot(input_snap,
     haloname = os.path.basename(os.path.dirname(os.path.dirname(input_snap)))
 
     print(snapname, runname, haloname)
+
+
+    output_dir=os.makedirs(os.path.join(output_root,haloname,runname,snapname))
+
     #copy parameter files to output directory
 
 
     #edit parameter files
 
+    #need to do any symlinking???
 
     #create runscript
 
