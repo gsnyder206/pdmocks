@@ -20,7 +20,8 @@ def setup_pd_snapshot(input_snapdir,
     print(snapname, runname, haloname)
 
 
-    output_dir=os.makedirs(os.path.join(output_root,haloname,runname,snapname), exist_ok=True)
+    output_dir=os.path.join(output_root,haloname,runname,snapname)
+    os.makedirs(output_dir, exist_ok=True)
 
     #copy parameter files to output directory
     print('output dir: ', output_dir)
