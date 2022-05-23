@@ -48,9 +48,9 @@ def setup_pd_snapshot(input_snapdir,
     mfo.write("outputfile = PD_output_dir+'/snap."+snapname+".rtout'\n")
 
     #HAVE TO CODE THIS -- See Anna's code!
-    mfo.write('x_cent = 36120.37227828722\n')
-    mfo.write('y_cent = 35397.028823492736\n')
-    mfo.write('z_cent = 37026.72022802777\n')
+    mfo.write('x_cent = 0.5\n')
+    mfo.write('y_cent = 0.5\n')
+    mfo.write('z_cent = 0.5\n')
 
     mfo.write('TCMB = 2.73\n')
 
