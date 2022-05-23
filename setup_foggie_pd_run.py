@@ -35,8 +35,8 @@ def setup_pd_snapshot(input_snapdir,
     mfo.write('snapshot_name = '+snapname+'\n')
 
     mfo.write('PD_output_dir = '+output_dir+'\n')
-    mfo.write('Auto_TF_file = snap'+snapname+'.logical\n')
-    mfo.write('Auto_dustdens_file = snap'+snapname+'.dustdens\n')
+    mfo.write("Auto_TF_file = 'snap."+snapname+".logical'\n")
+    mfo.write("Auto_dustdens_file = 'snap."+snapname+".dustdens'\n")
 
     mfo.write("inputfile = PD_output_dir+'/snap."+snapname+".rtin'\n")
     mfo.write("outputfile = PD_output_dir+'/snap."+snapname+".rtout'\n")
