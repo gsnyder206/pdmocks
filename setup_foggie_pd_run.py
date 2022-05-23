@@ -23,6 +23,7 @@ def setup_pd_snapshot(input_snapdir,
     output_dir=os.makedirs(os.path.join(output_root,haloname,runname,snapname))
 
     #copy parameter files to output directory
+    print('output dir: ', output_dir)
     shutil.copy2(pd_master_template,output_dir)
 
     #edit parameter files
