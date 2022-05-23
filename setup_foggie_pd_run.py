@@ -5,7 +5,7 @@ import sys
 import shutil
 
 def setup_pd_snapshot(input_snapdir,
-                    output_root='/nobackup17/gfsnyder/foggie-pd-outputs/',
+                    output_root='/nobackupp17/gfsnyder/foggie-pd-outputs/',
                     pd_master_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_master.py',
                     pd_model_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_model.py'):
 
