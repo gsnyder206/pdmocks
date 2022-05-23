@@ -332,7 +332,7 @@ BH_SED = True
 BH_eta = 0.1 #bhluminosity = BH_eta * mdot * c**2.
 BH_model = "Nenkova"
 #BH_modelfile = "/home/desika.narayanan/pd_git/agn_models/clumpy_models_201410_tvavg.hdf5"
-BH_modelfile = '/home5/gfsnyder/code/powderday_files/clumpy_models_201410_tvavg.hdf5'
+BH_modelfile = '/nobackupp17/gfsnyder/powderday_files/clumpy_models_201410_tvavg.hdf5'
 # The Nenkova BH_modelfile can be downloaded here:
 # https://www.clumpy.org/downloads/clumpy_models_201410_tvavg.hdf5
 BH_var = True # Include time variations on BH luminosity (default Hickox+ 2014)
