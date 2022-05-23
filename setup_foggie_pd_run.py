@@ -22,9 +22,18 @@ def get_halo_center(snapname,runname,halo_number,ds):
         return None,None,None
 
     cv_data=ascii.read(cv_file)
-    print(cv_data[0:5])
+    #print(cv_data[0:5])
 
-    return x, y, z
+    halo_i=cv_data['col3']==snapname
+    xc=cv_data['col4'][halo_i]
+    yc=cv_data['col5'][halo_i]
+    zc=cv_data['col6'][halo_i]
+    halo_center_kpc = ds.arr([float(xc), \
+                            float(yc), \
+                            float(zc), 'kpc')
+    halo_center_code = halo_center_kpc.in_units('code_length')
+
+    return halo_center_code
 
 
 def setup_pd_snapshot(input_snapdir,
@@ -56,7 +65,7 @@ def setup_pd_snapshot(input_snapdir,
     halo_number = haloname.split('_')[-1]
 
     x,y,z=get_halo_center(snapname,runname,halo_number,ds)
-
+    print(x,y,z)
     #edit parameter files
     modelfile=os.path.join(output_dir,'parameters_'+snapname+'.py')
     mfo=open(modelfile,'w')
@@ -71,10 +80,9 @@ def setup_pd_snapshot(input_snapdir,
     mfo.write("inputfile = PD_output_dir+'/snap."+snapname+".rtin'\n")
     mfo.write("outputfile = PD_output_dir+'/snap."+snapname+".rtout'\n")
 
-    #HAVE TO CODE THIS -- See Anna's code!
-    mfo.write('x_cent = 0.5\n')
-    mfo.write('y_cent = 0.5\n')
-    mfo.write('z_cent = 0.5\n')
+    mfo.write('x_cent = '+str(x)+'\n')
+    mfo.write('y_cent = '+str(y)+'\n')
+    mfo.write('z_cent = '+str(z)+'\n')
 
     mfo.write('TCMB = 2.73\n')
 
