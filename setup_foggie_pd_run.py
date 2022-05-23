@@ -4,6 +4,23 @@ import numpy as np
 import sys
 import shutil
 
+foggie_repo_dir='/nobackupp17/gfsnyder/foggie'
+
+def get_halo_center(snapname,runname,halo_number):
+
+    if runname='natural':
+        run_use='orig_nref11n':
+    else:
+        run_use=runname
+
+    cv_file = os.path.join(foggie_repo_dir,'foggie','halo_infos',halo_number,run_use,'halo_c_v')
+    print('cv_file: ', cv_file)
+
+
+
+    return x, y, z
+
+
 def setup_pd_snapshot(input_snapdir,
                     output_root='/nobackupp17/gfsnyder/foggie-pd-outputs/',
                     pd_master_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_master.py',
@@ -31,7 +48,7 @@ def setup_pd_snapshot(input_snapdir,
     #compute center from foggie halo_c_v files
     halo_number = haloname.split('_')[-1]
 
-
+    x,y,z=get_halo_center(snapname,runname,halo_number)
 
     #edit parameter files
     modelfile=os.path.join(output_dir,'parameters_'+snapname+'.py')
