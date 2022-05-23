@@ -4,18 +4,18 @@ import numpy as np
 import sys
 import shutil
 
-def setup_pd_snapshot(input_snap,
+def setup_pd_snapshot(input_snapdir,
                     output_root='/nobackup17/gfsnyder/foggie-pd-outputs/',
-                    pd_master_template='/home/gfsnyder/PythonCode/pdmocks/parameters_master.py',
-                    pd_model_template='/home/gfsnyder/PythonCode/pdmocks/parameters_model.py'):
+                    pd_master_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_master.py',
+                    pd_model_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_model.py'):
 
     #identify input snapshot
-    print('setting up: ', input_snap)
+    print('setting up: ', input_snapdir)
 
     #create output directory
-    snapname = os.path.basename(input_snap)
-    runname = os.path.basename(os.path.dirname(input_snap))
-    haloname = os.path.basename(os.path.dirname(os.path.dirname(input_snap)))
+    snapname = os.path.basename(input_snapdir)
+    runname = os.path.basename(os.path.dirname(input_snapdir))
+    haloname = os.path.basename(os.path.dirname(os.path.dirname(input_snapdir)))
 
     print(snapname, runname, haloname)
 
@@ -23,9 +23,30 @@ def setup_pd_snapshot(input_snap,
     output_dir=os.makedirs(os.path.join(output_root,haloname,runname,snapname))
 
     #copy parameter files to output directory
-
+    shutil.copy2(pd_master_template,output_dir)
 
     #edit parameter files
+    modelfile=os.path.join(output_dir,'parameters_'+snapname+'.py')
+    mfo=open(modelfile,'w')
+
+    mfo.write('hydro_dir = '+input_snapdir+'\n')
+    mfo.write('snapshot_name = '+snapname+'\n')
+
+    mfo.write('PD_output_dir = '+output_dir+'\n')
+    mfo.write('Auto_TF_file = snap'+snapname+'.logical\n')
+    mfo.write('Auto_dustdens_file = snap'+snapname+'.dustdens\n')
+
+    mfo.write("inputfile = PD_output_dir+'/snap."+snapname+".rtin'\n")
+    mfo.write("outputfile = PD_output_dir+'/snap."+snapname+".rtout'\n")
+
+    mfo.write('x_cent = 0\n')
+    mfo.write('y_cent = 0\n')
+    mfo.write('z_cent = 0\n')
+
+    mfo.write('TCMB = 2.73\n')
+
+    mfo.close()
+
 
     #need to do any symlinking???
 
