@@ -29,5 +29,6 @@ def setup_pd_snapshot(input_file,
 
 
 if __name__=="__main__":
-    input=sys.argv[1]
-    print(input)
+    input='/nobackup/mpeeples/halo_008508/nref11c_nref9f/DD1000'
+
+    setup_pd_snapshot(input)
