@@ -1,7 +1,7 @@
 import os
 import glob
 import numpy as np
-
+import sys
 
 def setup_pd_snapshot(input_file,
                     output_dir='/nobackup17/gfsnyder/foggie-pd-outputs/',
@@ -25,4 +25,9 @@ def setup_pd_snapshot(input_file,
 
 
 
-return
+    return
+
+
+if __name__=="__main__":
+    input=sys.argv[1]
+    print(input)
