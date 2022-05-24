@@ -48,7 +48,7 @@ def setup_pd_range(input_dir,begin_dd=500,end_dd=1500,skip=20):
     for ddf in dd_folders:
         #create individual stuff
         setup_pd_snapshot(ddf)
-        
+
         #create bulk submission script
 
 
@@ -113,17 +113,17 @@ def setup_pd_snapshot(input_snapdir,
     #create runscript
     qsub_fn=os.path.join(output_dir,'pd.qsub')
     qfo=open(qsub_fn,'w')
-	qfo.write('#!/bin/bash\n')
-	qfo.write('#PBS -S /bin/bash\n')   #apparently this is a thing
-	qfo.write('#PBS -l select=1:ncpus='+ncpus+':model='+model+'\n')   #selects cpu model and number (sunrise uses 1 node)
-	qfo.write('#PBS -l walltime='+walltime+'\n')    #hh:mm:ss before job is killed
-	qfo.write('#PBS -q '+queue+'\n')       #selects queue to submit to
-	qfo.write('#PBS -N pd_run\n')     #selects job name
-	qfo.write('#PBS -M gsnyder@stsci.edu\n')  #notifies job info to this email address
-	qfo.write('#PBS -m abe\n')  #set notification types (abe=abort, begin, end)
-	qfo.write('#PBS -o '+output_dir+'/pd_pbs.out\n')  #save standard output here
-	qfo.write('#PBS -e '+output_dir+'/pd_pbs.err\n')  #save standard error here
-	qfo.write('#PBS -V\n\n')    #export environment variables at start of job
+    qfo.write('#!/bin/bash\n')
+    qfo.write('#PBS -S /bin/bash\n')   #apparently this is a thing
+    qfo.write('#PBS -l select=1:ncpus='+ncpus+':model='+model+'\n')   #selects cpu model and number (sunrise uses 1 node)
+    qfo.write('#PBS -l walltime='+walltime+'\n')    #hh:mm:ss before job is killed
+    qfo.write('#PBS -q '+queue+'\n')       #selects queue to submit to
+    qfo.write('#PBS -N pd_run\n')     #selects job name
+    qfo.write('#PBS -M gsnyder@stsci.edu\n')  #notifies job info to this email address
+    qfo.write('#PBS -m abe\n')  #set notification types (abe=abort, begin, end)
+    qfo.write('#PBS -o '+output_dir+'/pd_pbs.out\n')  #save standard output here
+    qfo.write('#PBS -e '+output_dir+'/pd_pbs.err\n')  #save standard error here
+    qfo.write('#PBS -V\n\n')    #export environment variables at start of job
 
     qfo.write('conda activate pdenv\n')
     qfo.write('module load comp-intel/2018.3.222\n')
