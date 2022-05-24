@@ -115,7 +115,7 @@ def setup_pd_snapshot(input_snapdir,
     qfo=open(qsub_fn,'w')
     qfo.write('#!/bin/bash\n')
     qfo.write('#PBS -S /bin/bash\n')   #apparently this is a thing
-    qfo.write('#PBS -l select=1:ncpus='+ncpus+':model='+model+'\n')   #selects cpu model and number (sunrise uses 1 node)
+    qfo.write('#PBS -l select=1:ncpus='+str(ncpus)+':model='+model+'\n')   #selects cpu model and number (sunrise uses 1 node)
     qfo.write('#PBS -l walltime='+walltime+'\n')    #hh:mm:ss before job is killed
     qfo.write('#PBS -q '+queue+'\n')       #selects queue to submit to
     qfo.write('#PBS -N pd_run\n')     #selects job name
