@@ -36,10 +36,29 @@ def get_halo_center(snapname,runname,halo_number,ds):
     return halo_center_code
 
 
+def setup_pd_range(input_dir,begin_dd=500,end_dd=1500,skip=20):
+
+    ar=np.arange(begin_dd,end_dd,skip)#np.sory(np.asarray(glob.glob(os.path.join(input_dir,'DD????'))))
+    dd=[]
+    for ii in ar:
+        dd.append('DD{:04}'.format(ii))
+
+    dd = np.asarray(dd)
+    dd_folders=input_dir+dd
+    for ddf in dd_folders:
+        #create individual stuff
+        setup_pd_snapshot(ddf)
+        
+        #create bulk submission script
+
+
+    return
+
 def setup_pd_snapshot(input_snapdir,
                     output_root='/nobackupp17/gfsnyder/foggie-pd-outputs/',
                     pd_master_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_master.py',
-                    pd_model_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_model.py'):
+                    pd_model_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_model.py',
+                    ncpus=28,model='bro',walltime='24:00:00',queue='long'):
 
     #identify input snapshot
     print('setting up: ', input_snapdir)
@@ -92,9 +111,28 @@ def setup_pd_snapshot(input_snapdir,
     #need to do any symlinking???
 
     #create runscript
+    qsub_fn=os.path.join(output_dir,'pd.qsub')
+    qfo=open(qsub_fn,'w')
+	qfo.write('#!/bin/bash\n')
+	qfo.write('#PBS -S /bin/bash\n')   #apparently this is a thing
+	qfo.write('#PBS -l select=1:ncpus='+ncpus+':model='+model+'\n')   #selects cpu model and number (sunrise uses 1 node)
+	qfo.write('#PBS -l walltime='+walltime+'\n')    #hh:mm:ss before job is killed
+	qfo.write('#PBS -q '+queue+'\n')       #selects queue to submit to
+	qfo.write('#PBS -N pd_run\n')     #selects job name
+	qfo.write('#PBS -M gsnyder@stsci.edu\n')  #notifies job info to this email address
+	qfo.write('#PBS -m abe\n')  #set notification types (abe=abort, begin, end)
+	qfo.write('#PBS -o '+output_dir+'/pd_pbs.out\n')  #save standard output here
+	qfo.write('#PBS -e '+output_dir+'/pd_pbs.err\n')  #save standard error here
+	qfo.write('#PBS -V\n\n')    #export environment variables at start of job
+
+    qfo.write('conda activate pdenv\n')
+    qfo.write('module load comp-intel/2018.3.222\n')
+    qfo.write('module load mpi-hpe/mpt.2.25\n')
+    qfo.write('load hdf5/1.8.18_serial\n\n')
+    qfo.write('python /home5/gfsnyder/code/powderday/pd_front_end.py '+output_dir+' parameters_master '+os.path.basename(modelfile)[:-3]+'\n')
 
 
-
+    qfo.close()
 
     return
 
