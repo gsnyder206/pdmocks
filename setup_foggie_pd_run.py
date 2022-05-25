@@ -36,7 +36,7 @@ def get_halo_center(snapname,runname,halo_number,ds):
     return halo_center_code
 
 
-def setup_pd_range(input_dir,begin_dd=500,end_dd=1500,skip=20,
+def setup_pd_range(input_dir,begin_dd=100,end_dd=1500,skip=20,
                     output_root='/nobackupp17/gfsnyder/foggie-pd-outputs/'):
 
     ar=np.arange(begin_dd,end_dd,skip)#np.sory(np.asarray(glob.glob(os.path.join(input_dir,'DD????'))))
