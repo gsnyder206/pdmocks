@@ -36,21 +36,35 @@ def get_halo_center(snapname,runname,halo_number,ds):
     return halo_center_code
 
 
-def setup_pd_range(input_dir,begin_dd=500,end_dd=1500,skip=20):
+def setup_pd_range(input_dir,begin_dd=500,end_dd=1500,skip=20,
+                    output_root='/nobackupp17/gfsnyder/foggie-pd-outputs/'):
 
     ar=np.arange(begin_dd,end_dd,skip)#np.sory(np.asarray(glob.glob(os.path.join(input_dir,'DD????'))))
     dd=[]
     for ii in ar:
         dd.append('DD{:04}'.format(ii))
 
+    runname = os.path.basename(input_dir)
+    haloname = os.path.basename(os.path.dirname(input_snapdir))
+
+    rundir=os.path.join(output_root,haloname,runname)
+    os.makedirs(rundir, exist_ok=True)
+
+    subscript=os.path.join(rundir,'submit_range.sh')
+
+    ssfo=open(subscript,'w')
+
+
     dd = np.asarray(dd)
     dd_folders=input_dir+dd
+
     for ddf in dd_folders:
         #create individual stuff
-        setup_pd_snapshot(ddf)
+        qsub_fn=setup_pd_snapshot(ddf,output_root=output_root)
 
         #create bulk submission script
-
+        ssfo.write('qsub '+qsub_fn+'\n')
+    ssfo.close()
 
     return
 
@@ -113,7 +127,7 @@ def setup_pd_snapshot(input_snapdir,
     #create runscript
     qsub_fn=os.path.join(output_dir,'pd.qsub')
     qfo=open(qsub_fn,'w')
-    qfo.write('#!/bin/bash\n')
+    #qfo.write('#!/bin/bash\n')
     qfo.write('#PBS -S /bin/bash\n')   #apparently this is a thing
     qfo.write('#PBS -l select=1:ncpus='+str(ncpus)+':model='+model+'\n')   #selects cpu model and number (sunrise uses 1 node)
     qfo.write('#PBS -l walltime='+walltime+'\n')    #hh:mm:ss before job is killed
@@ -125,19 +139,23 @@ def setup_pd_snapshot(input_snapdir,
     qfo.write('#PBS -e '+output_dir+'/pd_pbs.err\n')  #save standard error here
     qfo.write('#PBS -V\n\n')    #export environment variables at start of job
 
-    qfo.write('conda activate pdenv\n')
+    qfo.write('source ~/.bashrc\n')
+    qfo.write('conda activate pdenv\n\n')
     qfo.write('module load comp-intel/2018.3.222\n')
     qfo.write('module load mpi-hpe/mpt.2.25\n')
-    qfo.write('load hdf5/1.8.18_serial\n\n')
+    qfo.write('module load hdf5/1.8.18_serial\n\n')
     qfo.write('python /home5/gfsnyder/code/powderday/pd_front_end.py '+output_dir+' parameters_master '+os.path.basename(modelfile)[:-3]+'\n')
 
 
     qfo.close()
 
-    return
+    return qsub_fn
 
 
 if __name__=="__main__":
-    input='/nobackup/mpeeples/halo_008508/nref11c_nref9f/DD1000'
+    #input='/nobackup/mpeeples/halo_008508/nref11c_nref9f/DD1000'
 
-    setup_pd_snapshot(input)
+    #qfn=setup_pd_snapshot(input)
+
+    input='/nobackup/mpeeples/halo_008508/nref11c_nref9f'
+    setup_pd_range(input)
