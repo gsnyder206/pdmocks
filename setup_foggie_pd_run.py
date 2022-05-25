@@ -56,10 +56,11 @@ def setup_pd_range(input_dir,begin_dd=500,end_dd=1500,skip=20,
 
 
     dd = np.asarray(dd)
-    dd_folders=input_dir+dd
 
-    for ddf in dd_folders:
+
+    for ddi in dd:
         #create individual stuff
+        ddf = os.path.join(input_dir,ddi)
         qsub_fn=setup_pd_snapshot(ddf,output_root=output_root)
 
         #create bulk submission script
