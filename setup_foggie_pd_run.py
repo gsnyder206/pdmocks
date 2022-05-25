@@ -45,7 +45,7 @@ def setup_pd_range(input_dir,begin_dd=500,end_dd=1500,skip=20,
         dd.append('DD{:04}'.format(ii))
 
     runname = os.path.basename(input_dir)
-    haloname = os.path.basename(os.path.dirname(input_snapdir))
+    haloname = os.path.basename(os.path.dirname(input_dir))
 
     rundir=os.path.join(output_root,haloname,runname)
     os.makedirs(rundir, exist_ok=True)
