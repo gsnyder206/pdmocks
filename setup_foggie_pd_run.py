@@ -37,7 +37,7 @@ def get_halo_center(snapname,runname,halo_number,ds):
 
 
 def setup_pd_range(input_dir,begin_dd=100,end_dd=1500,skip=20,
-                    output_root='/nobackupp17/gfsnyder/foggie-pd-outputs/'):
+                    output_root='/nobackupp17/gfsnyder/foggie-pd-outputs/',ncpus=28,select=1):
 
     ar=np.arange(begin_dd,end_dd,skip)#np.sory(np.asarray(glob.glob(os.path.join(input_dir,'DD????'))))
     dd=[]
@@ -61,7 +61,7 @@ def setup_pd_range(input_dir,begin_dd=100,end_dd=1500,skip=20,
     for ddi in dd:
         #create individual stuff
         ddf = os.path.join(input_dir,ddi)
-        qsub_fn=setup_pd_snapshot(ddf,output_root=output_root)
+        qsub_fn=setup_pd_snapshot(ddf,output_root=output_root,ncpus=ncpus,select=select)
 
         #create bulk submission script
         ssfo.write('qsub '+qsub_fn+'\n')
