@@ -6,7 +6,7 @@ import shutil
 import astropy.io.ascii as ascii
 import yt
 
-foggie_repo_dir='/nobackupp17/gfsnyder/foggie'
+foggie_repo_dir='/nobackupp17/gfsnyder/repo/foggie'
 
 def get_halo_center(snapname,runname,halo_number,ds):
 
