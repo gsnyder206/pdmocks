@@ -73,7 +73,7 @@ def setup_pd_snapshot(input_snapdir,
                     output_root='/nobackupp17/gfsnyder/foggie-pd-outputs/',
                     pd_master_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_master.py',
                     pd_model_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_model.py',
-                    ncpus=28,model='bro',walltime='24:00:00',queue='long'):
+                    ncpus=28,model='bro',walltime='24:00:00',queue='long',select=1):
 
     #identify input snapshot
     print('setting up: ', input_snapdir)
@@ -130,7 +130,7 @@ def setup_pd_snapshot(input_snapdir,
     qfo=open(qsub_fn,'w')
     #qfo.write('#!/bin/bash\n')
     qfo.write('#PBS -S /bin/bash\n')   #apparently this is a thing
-    qfo.write('#PBS -l select=1:ncpus='+str(ncpus)+':model='+model+'\n')   #selects cpu model and number (sunrise uses 1 node)
+    qfo.write('#PBS -l select='+str(select)+':ncpus='+str(ncpus)+':model='+model+'\n')   #selects cpu model and number (sunrise uses 1 node)
     qfo.write('#PBS -l walltime='+walltime+'\n')    #hh:mm:ss before job is killed
     qfo.write('#PBS -q '+queue+'\n')       #selects queue to submit to
     qfo.write('#PBS -N pd_run\n')     #selects job name
@@ -145,6 +145,10 @@ def setup_pd_snapshot(input_snapdir,
     qfo.write('module load comp-intel/2018.3.222\n')
     qfo.write('module load mpi-hpe/mpt.2.25\n')
     qfo.write('module load hdf5/1.8.18_serial\n\n')
+    qfo.write('unset MPI_SHEPHERD\n')
+    qfo.write('export OMP_NUM_THREADS=8\n')
+    qfo.write('export OMP_WAIT_POLICY=passive\n')
+    qfo.write('export MPI_DSM_DISTRIBUTE=0\n\n')
     qfo.write('python /home5/gfsnyder/code/powderday/pd_front_end.py '+output_dir+' parameters_master '+os.path.basename(modelfile)[:-3]+'\n')
 
 
@@ -159,4 +163,4 @@ if __name__=="__main__":
     #qfn=setup_pd_snapshot(input)
 
     input='/nobackup/mpeeples/halo_008508/nref11c_nref9f'
-    setup_pd_range(input)
+    setup_pd_range(input,ncpus=8,select=64)
