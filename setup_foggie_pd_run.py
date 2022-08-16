@@ -106,6 +106,7 @@ def setup_pd_snapshot(input_snapdir,
 
     mfo.write("hydro_dir = '"+input_snapdir+"/'\n")
     mfo.write("snapshot_name = '"+snapname+"'\n")
+    mfo.write("snapnum_str = '"+snapname+"'\n")
 
     mfo.write("PD_output_dir = '"+output_dir+"/'\n")
     mfo.write("Auto_TF_file = 'snap."+snapname+".logical'\n")

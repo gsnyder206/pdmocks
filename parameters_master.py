@@ -26,9 +26,9 @@ n_MPI_processes = 20 # number of MPI tasks to run. for TORQUE this is
 #===============================================
 #RT INFORMATION
 #===============================================
-n_photons_initial = 1.e6
-n_photons_imaging = 1.e6
-n_photons_raytracing_sources = 1.e6
+n_photons_initial = 1.e9
+n_photons_imaging = 1.e9
+n_photons_raytracing_sources = 1.e9
 n_photons_raytracing_dust = 0
 
 FORCE_RANDOM_SEED = False
