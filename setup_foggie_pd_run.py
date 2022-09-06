@@ -73,7 +73,7 @@ def setup_pd_snapshot(input_snapdir,
                     output_root='/nobackupp17/gfsnyder/foggie-pd-outputs/',
                     pd_master_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_master.py',
                     pd_model_template='/home5/gfsnyder/PythonCode/pdmocks/parameters_model.py',
-                    ncpus=28,model='bro',walltime='24:00:00',queue='long',select=1):
+                    ncpus=8,model='bro',walltime='8:00:00',queue='normal',select=64):
 
     #identify input snapshot
     print('setting up: ', input_snapdir)

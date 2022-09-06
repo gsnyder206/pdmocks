@@ -20,15 +20,15 @@ bbox_lim = 1.e5 # kpc - this is the initial bounding box of the grid (+/- bbox_l
 #===============================================
 
 n_processes = 20 # number of pool processes to run for stellar SED generation
-n_MPI_processes = 20 # number of MPI tasks to run. for TORQUE this is
+n_MPI_processes = 512 # number of MPI tasks to run. for TORQUE this is
                      # best set as the same as n_processes, while for SLURM this may not be the case.
 
 #===============================================
 #RT INFORMATION
 #===============================================
-n_photons_initial = 1.e9
-n_photons_imaging = 1.e9
-n_photons_raytracing_sources = 1.e9
+n_photons_initial = 1.e8
+n_photons_imaging = 1.e8
+n_photons_raytracing_sources = 0
 n_photons_raytracing_dust = 0
 
 FORCE_RANDOM_SEED = False
@@ -375,8 +375,8 @@ filterfiles = [
 # $ shopt -s globstar; printf "#    '%s'\n" *.filter
 
 
-npix_x = 128
-npix_y = 128
+npix_x = 256
+npix_y = 256
 
 #experimental and under development - not advised for use
 IMAGING_TRANSMISSION_FILTER = False
